@@ -105,5 +105,15 @@ describe('account', () => {
 
       expect(return_value instanceof Transaction).toBe(true);
     });
+
+    it('returns the date as a property of the Transaction object in ISO date format', () => {
+      myAccount = new Account();
+      date = "21/01/2023";
+      amount = 100;
+
+      new_transaction = myAccount.debit(date, amount);
+      
+      expect(new_transaction.date).toEqual(new Date("2023", "01" -1, "21"))
+    });
   });
 });

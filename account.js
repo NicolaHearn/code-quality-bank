@@ -28,6 +28,7 @@ class Account {
   debit(date, amount) {
     this.current_balance -= amount;
     const new_transaction = new Transaction();
+    new_transaction.date = this.stringToDate(date);
     return new_transaction;
   }
 
