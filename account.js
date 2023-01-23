@@ -20,6 +20,7 @@ class Account {
     const new_transaction = new Transaction();
 
     new_transaction.date = this.stringToDate(date);
+    new_transaction.credit_amount = amount;
     return new_transaction;
   }
 
