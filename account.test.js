@@ -55,7 +55,7 @@ describe('account', () => {
       new_transation = myAccount.credit(date, amount);
       
       expect(new_transation.date).toEqual(new Date("2023", "01" -1, "21"))
-    })
+    });
   });
 
   describe('debit', () => {
