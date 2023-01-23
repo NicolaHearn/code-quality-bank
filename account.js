@@ -6,9 +6,18 @@ class Account {
     this.transactions = ["date || credit || debit || balance"];
   }
 
+
+
   credit(date, amount) {
     this.current_balance += amount;
     const new_transaction = new Transaction();
+    
+    //date logic 23/01/2023
+    const year = date.slice(6);
+    const month = parseInt(date.slice(3, 5));
+    const day = date.slice(0, 2);
+
+    new_transaction.date = new Date(year, month-1, day);
     return new_transaction;
   }
 
