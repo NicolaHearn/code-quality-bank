@@ -63,14 +63,14 @@ describe('account', () => {
          expect(myAccount.current_balance).toEqual(-100);
        });
    
-      //  it('creates a new Transaction object and returns it', () => {
-      //    myAccount = new Account();
-      //    date = "21/01/23";
-      //    amount = 100;
-      //    return_value = myAccount.debit(date, amount);
+       it('creates a new Transaction object and returns it', () => {
+         myAccount = new Account();
+         date = "21/01/23";
+         amount = 100;
+         return_value = myAccount.debit(date, amount);
    
-      //    expect(return_value instanceof Transaction).toBe(true);
-      //  })
+         expect(return_value instanceof Transaction).toBe(true);
+       });
   
   });
 });

@@ -14,12 +14,11 @@ class Account {
 
   debit(date, amount) {
     this.current_balance -= amount;
-    // const new_transaction = new Transaction();
-    // return new_transaction
+    const new_transaction = new Transaction();
+    return new_transaction;
   }
 
   printStatement() {
-
     const header = "date || credit || debit || balance";
     return header;
   }
