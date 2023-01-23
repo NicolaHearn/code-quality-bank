@@ -126,5 +126,15 @@ describe('account', () => {
       expect(new_transaction.debit_amount).toEqual(100);
       expect(new_transaction.credit_amount).toEqual(null);
     });
+
+    it('sets the balance property of the transaction object to the current_balance', () => {
+      myAccount = new Account();
+      date = "21/01/2023";
+      amount = 100;
+
+      new_transaction = myAccount.debit(date, amount);
+
+      expect(new_transaction.balance).toEqual(-100);
+    });
   });
 });
