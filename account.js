@@ -3,7 +3,7 @@ const Transaction = require('./transaction.js');
 class Account {
   constructor() {
     this.current_balance = 0
-    this.transactions = ["date || credit || debit || balance"];
+    this.transactions = [];
   }
 
   stringToDate(dateString) {
@@ -22,6 +22,7 @@ class Account {
     new_transaction.date = this.stringToDate(date);
     new_transaction.credit_amount = amount;
     new_transaction.balance = this.current_balance;
+    this.transactions.push(new_transaction);
     return new_transaction;
   }
 
@@ -31,6 +32,7 @@ class Account {
     new_transaction.date = this.stringToDate(date);
     new_transaction.debit_amount = amount;
     new_transaction.balance = this.current_balance;
+    this.transactions.push(new_transaction);
     return new_transaction;
   }
 

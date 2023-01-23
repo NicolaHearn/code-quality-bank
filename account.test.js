@@ -2,13 +2,25 @@ const Transaction = require('./transaction.js');
 const Account = require('./account.js')
 
 describe('account', () => {
-  describe('initializes', () => {
+  describe('constructs and stores properties', () => {
     it('initializes a new object (account) with a starting balance of zero and an empty array for storing transactions', () => {
       const myAccount = new Account(); 
 
       expect(myAccount instanceof Account).toBe(true);
       expect(myAccount.current_balance).toEqual(0);
       expect(myAccount.transactions instanceof Array).toBe(true);
+    });
+
+    it('keeps a list of all transactions', () => {
+      const myAccount = new Account();
+
+      tOne = myAccount.credit("12/01/2023", 500);
+      tTwo = myAccount.debit("13/01/2023", 100);
+
+      expect(myAccount.transactions).toEqual([
+        {date: new Date("2023", "01" -1, "12"), credit_amount: 500, debit_amount: null, balance: 500},
+        {date: new Date("2023", "01" -1, "13"), credit_amount: null, debit_amount: 100, balance: 400}
+        ]);
     });
   });
 
@@ -17,7 +29,7 @@ describe('account', () => {
       const MyAccount = new Account();
 
       expect(MyAccount.printStatement()).toEqual(expect.stringContaining("date || credit || debit || balance"));
-    })
+    });
   });
 
   describe('credit', () => {
