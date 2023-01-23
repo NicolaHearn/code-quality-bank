@@ -4,8 +4,8 @@ class Account {
     this.transactions = ["date || credit || debit || balance"];
   }
 
-  print_statement() {
-    return this.transactions;
+  credit(date, amount) {
+    this.current_balance += amount;
   }
 
   printStatement() {

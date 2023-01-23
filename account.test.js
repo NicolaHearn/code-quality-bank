@@ -12,13 +12,31 @@ describe('account', () => {
   });
 
   describe('print_statement', () => {
-
     it('returns a header for the statement', () => {
       const MyAccount = new Account();
       expect(MyAccount.printStatement()).toEqual(expect.stringContaining("date || credit || debit || balance"));
 
     })
   });
+
+  describe('credit', () => {
+   xit('accepts two arguments - a date as a string and an amount as a number', () => {
+      myAccount = new Account();
+      date = "21/01/23";
+      amount = 100;
+      expect(myAccount.credit(date)).not.toThrowError;
+    });
+
+    it('adds the amount to the current balance', () => {
+      myAccount = new Account();
+      date = "21/01/23";
+      amount = 100;
+      myAccount.credit(date, amount);
+
+      expect(myAccount.current_balance).toEqual(100);
+    });
+
+  })
 
 });
 
