@@ -1,3 +1,5 @@
+const Transaction = require('./transaction.js');
+
 class Account {
   constructor() {
     this.current_balance = 0
@@ -6,6 +8,8 @@ class Account {
 
   credit(date, amount) {
     this.current_balance += amount;
+    const new_transaction = new Transaction()
+    return new_transaction;
   }
 
   printStatement() {
