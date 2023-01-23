@@ -44,11 +44,14 @@ methods:
 credit = Account.credit(date, amount)
 - date is text in format "dd/mm/yy"
 - amount is number in format 00.00
+- pushes the transaction to the transaction_array
 - returns a transaction object which stores the date, credit_amount, debit_amount, current_balance
+
 
 debit = Account.debit(date, amount)
 - date is text in format "dd/mm/yy"
 - amount is number in format 00.00
+- pushes the transaction to the transaction_array
 - returns a transaction object which stores the date, credit_amount, debit_amount, current_balance
 
 statement = Account.print_statement()
