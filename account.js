@@ -21,6 +21,7 @@ class Account {
 
     new_transaction.date = this.stringToDate(date);
     new_transaction.credit_amount = amount;
+    new_transaction.balance = this.current_balance;
     return new_transaction;
   }
 

@@ -57,7 +57,7 @@ describe('account', () => {
       expect(new_transaction.date).toEqual(new Date("2023", "01" -1, "21"))
     });
 
-    it('returns the amount as the credit_amount property of the transaction object', () => {
+    it('returns the amount as the credit_amount property of the transaction object and debit_amount is still equal to null', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
@@ -65,7 +65,18 @@ describe('account', () => {
       new_transaction = myAccount.credit(date, amount);
 
       expect(new_transaction.credit_amount).toEqual(100);
-    })
+      expect(new_transaction.debit_amount).toEqual(null);
+    });
+
+    it('sets the balance property of the transaction object to the current_balance', () => {
+      myAccount = new Account();
+      date = "21/01/2023";
+      amount = 100;
+
+      new_transaction = myAccount.credit(date, amount);
+
+      expect(new_transaction.balance).toEqual(100);
+    });
   });
 
   describe('debit', () => {
