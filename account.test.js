@@ -43,11 +43,34 @@ describe('account', () => {
       return_value = myAccount.credit(date, amount);
 
       expect(return_value instanceof Transaction).toBe(true);
-    })
+    });
+  });
 
-  })
-
+    describe('debit', () => {
+      xit('accepts two arguments - a date as a string and an amount as a number', () => {
+         myAccount = new Account();
+         date = "21/01/23";
+         amount = 100;
+         expect(myAccount.debit(date)).not.toThrowError;
+       });
+   
+       it('adds the amount to the current balance', () => {
+         myAccount = new Account();
+         date = "21/01/23";
+         amount = 100;
+         myAccount.debit(date, amount);
+   
+         expect(myAccount.current_balance).toEqual(-100);
+       });
+   
+      //  it('creates a new Transaction object and returns it', () => {
+      //    myAccount = new Account();
+      //    date = "21/01/23";
+      //    amount = 100;
+      //    return_value = myAccount.debit(date, amount);
+   
+      //    expect(return_value instanceof Transaction).toBe(true);
+      //  })
+  
+  });
 });
-
-
-

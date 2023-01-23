@@ -8,8 +8,14 @@ class Account {
 
   credit(date, amount) {
     this.current_balance += amount;
-    const new_transaction = new Transaction()
+    const new_transaction = new Transaction();
     return new_transaction;
+  }
+
+  debit(date, amount) {
+    this.current_balance -= amount;
+    // const new_transaction = new Transaction();
+    // return new_transaction
   }
 
   printStatement() {
