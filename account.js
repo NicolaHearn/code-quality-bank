@@ -7,6 +7,12 @@ class Account {
   print_statement() {
     return this.transactions;
   }
+
+  printStatement() {
+
+    const header = "date || credit || debit || balance";
+    return header;
+  }
 }
 
 module.exports = Account;

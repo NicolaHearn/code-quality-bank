@@ -12,13 +12,13 @@ describe('account', () => {
   });
 
   describe('print_statement', () => {
-    it('first element in the transactions array is the header row', () => {
+
+    it('returns a header for the statement', () => {
       const MyAccount = new Account();
-      statement = MyAccount.print_statement();
-      expect(statement[0]).toEqual("date || credit || debit || balance");
+      expect(MyAccount.printStatement()).toEqual(expect.stringContaining("date || credit || debit || balance"));
+
     })
   });
-
 
 });
 
