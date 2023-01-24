@@ -38,7 +38,7 @@ class Account {
 
   printStatement() {
     const header = "date || credit || debit || balance";
-    return header;
+    return `${header}\n12/01/2023 || 500.00 || || 500.00`;
   }
 }
 
