@@ -17,6 +17,13 @@ class Account {
   }
 
   stringToDate(dateString) {
+
+    const dateFormat = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
+
+    if (!dateString.match(dateFormat)) {
+      console.log('The date must be in format dd/mm/yyyy')
+    }
+
     const year = dateString.slice(6);
     const month = parseInt(dateString.slice(3, 5));
     const day = dateString.slice(0, 2);
@@ -28,17 +35,37 @@ class Account {
     date instanceof Date ? transaction.date = date : transaction.date = this.stringToDate(date);
     transaction.balance = this.current_balance;
     this.transactions.push(transaction);
-
   }
+
+  dateIsValid(date) {
+    date instanceof Date ? date = date : date = this.stringToDate(date);
+    if (this.transactions.length !== 0 && date < this.transactions.at(-1).date) {
+      console.log('The date must be later than the date of the most recent transaction')
+    }
+  }
+
+  // dateFormatIsValid(date) {
+  //   const dateFormat = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
+
+  //   if (!date.match(dateFormat)) {
+  //     console.log('The date must be in format dd/mm/yyyy')
+  //   }
+  // }
+
   deposit(amount, date = new Date()) {
+    date instanceof Date ? date = date : date = this.stringToDate(date);
+    this.dateIsValid(date);
     this.current_balance += amount;
     const new_transaction = new Transaction();
     new_transaction.credit_amount = amount;
     this.setPropertiesAndRecord(new_transaction, date);
     return new_transaction;
-  }
+  };
 
   withdraw(amount, date = new Date()) {
+    // this.dateFormatIsValid(date);
+    date instanceof Date ? date = date : date = this.stringToDate(date);
+    this.dateIsValid(date);
     this.current_balance -= amount;
     const new_transaction = new Transaction();
     new_transaction.debit_amount = amount;
