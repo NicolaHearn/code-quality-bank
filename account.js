@@ -1,5 +1,15 @@
 const Transaction = require('./transaction.js');
 
+// const replServer = repl.start({
+//   prompt: "node > ",
+//   input: process.stdin,
+//   output: process.stdout,
+//   useGlobal: true
+// });
+// replServer.on('exit', function() {
+//   console.log("REPL DONE");
+// });
+
 class Account {
   constructor() {
     this.current_balance = 0
@@ -38,9 +48,10 @@ class Account {
 
   printStatement() {
     const header = "date || credit || debit || balance";
-    return `${header}\n${this.transactions[0].print()}\n
-    ${this.transactions[1].print()}`;
+    console.log(`${header}\n${this.transactions[0].print()}`);
   }
 }
+
+
 
 module.exports = Account;

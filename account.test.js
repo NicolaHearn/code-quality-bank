@@ -31,7 +31,10 @@ describe('account', () => {
       tOne = myAccount.credit("12/01/2023", 500);
       tTwo = myAccount.debit("13/01/2023", 100);
 
-      expect(myAccount.printStatement()).toEqual(
+      const logSpy = jest.spyOn(global.console, 'log');
+      myAccount.printStatement();
+
+      expect(logSpy).toHaveBeenCalledWith(
         expect.stringContaining("date || credit || debit || balance")
         );
     });
@@ -41,9 +44,15 @@ describe('account', () => {
       tOne = myAccount.credit("12/01/2023", 500);
       tTwo = myAccount.debit("13/01/2023", 100);
       
-      expect(myAccount.printStatement()).toEqual(
+
+      const logSpy = jest.spyOn(global.console, 'log');
+      myAccount.printStatement();
+      const header = "date || credit || debit || balance";
+
+      expect(logSpy).toHaveBeenCalled();
+      expect(logSpy).toHaveBeenCalledWith(
         expect.stringContaining("12/01/2023 || 500.00 || || 500.00")
-        )
+        ); 
     });
   });
 
