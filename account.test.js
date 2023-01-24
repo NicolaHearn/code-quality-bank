@@ -222,6 +222,17 @@ describe('account', () => {
         myAccount.withdraw(200, "08/01/2023");
         expect(logSpy).toHaveBeenCalledWith('The date must be later than the date of the most recent transaction');
       });
+
+      it('checks the date is in the correct format and console logs an error if not', () => {
+        myAccount = new Account();
+
+        const logSpy = jest.spyOn(global.console, 'log');
+        myAccount.deposit(100, "10")
+
+        expect(logSpy).toHaveBeenCalledWith('The date must be in format dd/mm/yyyy'); 
+        myAccount.withdraw(200, "08/01/23");
+        expect(logSpy).toHaveBeenCalledWith('The date must be in format dd/mm/yyyy');
+      });
     }) 
   });
 
