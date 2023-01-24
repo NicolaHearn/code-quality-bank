@@ -7,7 +7,7 @@ class Transaction {
   }
 
   print() {
-    return "21/01/23 || 500.00 ||  || 500.00";
+    return `${this.date.toLocaleDateString()} || ${this.credit_amount.toFixed(2)} || ${this.debit_amount === null ? '' : this.debit_amount.toFixed(2)} || ${this.balance.toFixed(2)}`
   }
 }
 
