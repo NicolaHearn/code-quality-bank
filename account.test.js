@@ -14,8 +14,8 @@ describe('account', () => {
     it('keeps a list of all transactions', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.deposit("12/01/2023", 500);
-      tTwo = myAccount.withdraw("13/01/2023", 100);
+      tOne = myAccount.deposit(500, "12/01/2023");
+      tTwo = myAccount.withdraw(100, "13/01/2023");
 
       expect(myAccount.transactions).toEqual([
         {date: new Date("2023", "01" -1, "12"), credit_amount: 500, debit_amount: null, balance: 500},
@@ -28,9 +28,9 @@ describe('account', () => {
     it('prints a statement including a header and all transactions newest to oldest', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.deposit("12/01/2023", 500);
-      tTwo = myAccount.withdraw("13/01/2023", 100);
-      tThree = myAccount.deposit("14/01/2023", 500);
+      tOne = myAccount.deposit(500, "12/01/2023");
+      tTwo = myAccount.withdraw(100, "13/01/2023");
+      tThree = myAccount.deposit(500, "14/01/2023");
       
       const logSpy = jest.spyOn(global.console, 'log');
       myAccount.printStatement();
@@ -42,8 +42,8 @@ describe('account', () => {
     it('prints a statement header to the console', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.deposit("12/01/2023", 500);
-      tTwo = myAccount.withdraw("13/01/2023", 100);
+      tOne = myAccount.deposit(500, "12/01/2023");
+      tTwo = myAccount.withdraw(100, "13/01/2023");
 
       const logSpy = jest.spyOn(global.console, 'log');
       myAccount.printStatement();
@@ -55,8 +55,8 @@ describe('account', () => {
     it('prints a transaction in the statement', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.deposit("12/01/2023", 500);
-      tTwo = myAccount.withdraw("13/01/2023", 100);
+      tOne = myAccount.deposit(500, "12/01/2023");
+      tTwo = myAccount.withdraw(100, "13/01/2023");
       
 
       const logSpy = jest.spyOn(global.console, 'log');
@@ -70,8 +70,8 @@ describe('account', () => {
     it('prints all transactions in the statement', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.deposit("12/01/2023", 500);
-      tTwo = myAccount.withdraw("13/01/2023", 100);
+      tOne = myAccount.deposit(500, "12/01/2023");
+      tTwo = myAccount.withdraw(100, "13/01/2023");
       
       const logSpy = jest.spyOn(global.console, 'log');
       myAccount.printStatement();
@@ -95,11 +95,20 @@ describe('account', () => {
       expect(myAccount.deposit(date)).not.toThrowError;
     });
 
+    it('accepts a default date if no date is input', () => {
+      myAccount = new Account();
+      amount = 100;
+      myAccount.deposit(amount);
+
+      expect(myAccount.current_balance).toEqual(100);
+      expect(myAccount.transactions[0].date).toEqual(new Date());
+    })
+
     it('adds the amount to the current balance', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
-      myAccount.deposit(date, amount);
+      myAccount.deposit(amount, date);
 
       expect(myAccount.current_balance).toEqual(100);
     });
@@ -108,7 +117,7 @@ describe('account', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
-      return_value = myAccount.deposit(date, amount);
+      return_value = myAccount.deposit(amount, date);
 
       expect(return_value instanceof Transaction).toBe(true);
     });
@@ -118,7 +127,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.deposit(date, amount);
+      new_transaction = myAccount.deposit(amount, date);
       
       expect(new_transaction.date).toEqual(new Date("2023", "01" -1, "21"))
     });
@@ -128,7 +137,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.deposit(date, amount);
+      new_transaction = myAccount.deposit(amount, date);
 
       expect(new_transaction.credit_amount).toEqual(100);
       expect(new_transaction.debit_amount).toEqual(null);
@@ -139,7 +148,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.deposit(date, amount);
+      new_transaction = myAccount.deposit(amount, date);
 
       expect(new_transaction.balance).toEqual(100);
     });
@@ -158,7 +167,7 @@ describe('account', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
-      myAccount.withdraw(date, amount);
+      myAccount.withdraw(amount, date);
 
       expect(myAccount.current_balance).toEqual(-100);
     });
@@ -167,7 +176,7 @@ describe('account', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
-      return_value = myAccount.withdraw(date, amount);
+      return_value = myAccount.withdraw(amount, date);
 
       expect(return_value instanceof Transaction).toBe(true);
     });
@@ -177,7 +186,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.withdraw(date, amount);
+      new_transaction = myAccount.withdraw(amount, date);
       
       expect(new_transaction.date).toEqual(new Date("2023", "01" -1, "21"))
     });
@@ -187,7 +196,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.withdraw(date, amount);
+      new_transaction = myAccount.withdraw(amount, date);
 
       expect(new_transaction.debit_amount).toEqual(100);
       expect(new_transaction.credit_amount).toEqual(null);
@@ -198,7 +207,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.withdraw(date, amount);
+      new_transaction = myAccount.withdraw(amount, date);
 
       expect(new_transaction.balance).toEqual(-100);
     });

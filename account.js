@@ -24,25 +24,25 @@ class Account {
     return new Date(year, month-1, day);
   }
 
-  setPropertiesAndRecord(transaction, date, amount) {
-    transaction.date = this.stringToDate(date);
+  setPropertiesAndRecord(transaction, date) {
+    date instanceof Date ? transaction.date = date : transaction.date = this.stringToDate(date);
     transaction.balance = this.current_balance;
     this.transactions.push(transaction);
 
   }
-  deposit(date, amount) {
+  deposit(amount, date = new Date()) {
     this.current_balance += amount;
     const new_transaction = new Transaction();
     new_transaction.credit_amount = amount;
-    this.setPropertiesAndRecord(new_transaction, date, amount);
+    this.setPropertiesAndRecord(new_transaction, date);
     return new_transaction;
   }
 
-  withdraw(date, amount) {
+  withdraw(amount, date = new Date()) {
     this.current_balance -= amount;
     const new_transaction = new Transaction();
     new_transaction.debit_amount = amount;
-    this.setPropertiesAndRecord(new_transaction, date, amount);
+    this.setPropertiesAndRecord(new_transaction, date);
     return new_transaction;
   }
 
