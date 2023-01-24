@@ -87,22 +87,13 @@ describe('account', () => {
   });
 
   describe('deposit', () => {
-   xit('accepts two arguments - a date as a string and an amount as a number', () => {
-      myAccount = new Account();
-      date = "21/01/2023";
-      amount = 100;
-
-      expect(myAccount.deposit(date)).not.toThrowError;
-    });
-
     it('accepts a default date if no date is input', () => {
       myAccount = new Account();
       amount = 100;
       myAccount.deposit(amount);
 
-      expect(myAccount.current_balance).toEqual(100);
       expect(myAccount.transactions[0].date).toEqual(new Date());
-    })
+    });
 
     it('adds the amount to the current balance', () => {
       myAccount = new Account();
@@ -155,14 +146,14 @@ describe('account', () => {
   });
 
   describe('withdraw', () => {
-    xit('accepts two arguments - a date as a string and an amount as a number', () => {
-        myAccount = new Account();
-        date = "21/01/2023";
-        amount = 100;
+    it('accepts a default date if no date is input', () => {
+      myAccount = new Account();
+      amount = 100;
+      myAccount.withdraw(amount);
 
-        expect(myAccount.withdraw(date)).not.toThrowError;
-      });
-  
+      expect(myAccount.transactions[0].date).toEqual(new Date());
+    });
+
     it('adds the amount to the current balance', () => {
       myAccount = new Account();
       date = "21/01/2023";
