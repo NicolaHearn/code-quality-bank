@@ -43,17 +43,18 @@ class Account {
     const new_transaction = new Transaction();
     new_transaction.debit_amount = amount;
     this.setPropertiesAndRecord(new_transaction, date, amount);
+    console.log(new_transaction)
     return new_transaction;
   }
 
   printStatement() {
     const header = "date || credit || debit || balance";
-    console.log(`${header}`);
 
-    this.transactions.forEach(transaction => console.log(transaction.print()))
+    const transactions_pretty = [] // .map here would be better but it returned undefined and I couldn't work out why
+    this.transactions.reverse().forEach(transaction => transactions_pretty.push(transaction.print()));
+
+    console.log(`${header}\n${transactions_pretty.join("\n")}`);
   }
 }
-
-
 
 module.exports = Account;

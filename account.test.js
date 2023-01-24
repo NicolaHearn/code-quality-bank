@@ -25,6 +25,20 @@ describe('account', () => {
   });
 
   describe('print_statement', () => {
+    it('prints a statement including a header and all transactions newest to oldest', () => {
+      const myAccount = new Account();
+
+      tOne = myAccount.credit("12/01/2023", 500);
+      tTwo = myAccount.debit("13/01/2023", 100);
+      tThree = myAccount.credit("14/01/2023", 500);
+      
+      const logSpy = jest.spyOn(global.console, 'log');
+      myAccount.printStatement();
+      
+      expect(logSpy).toHaveBeenCalledWith(
+      "date || credit || debit || balance\n14/01/2023 || 500.00 ||  || 900.00\n13/01/2023 ||  || 100.00 || 400.00\n12/01/2023 || 500.00 ||  || 500.00");
+    });
+
     it('prints a statement header to the console', () => {
       const myAccount = new Account();
 
@@ -47,7 +61,6 @@ describe('account', () => {
 
       const logSpy = jest.spyOn(global.console, 'log');
       myAccount.printStatement();
-      const header = "date || credit || debit || balance";
 
       expect(logSpy).toHaveBeenCalledWith(
         expect.stringContaining("12/01/2023 || 500.00 ||  || 500.00")
@@ -62,8 +75,7 @@ describe('account', () => {
       
       const logSpy = jest.spyOn(global.console, 'log');
       myAccount.printStatement();
-      const header = "date || credit || debit || balance";
-
+     
       expect(logSpy).toHaveBeenCalledWith(
         expect.stringContaining("12/01/2023 || 500.00 ||  || 500.00")
         ); 
@@ -71,6 +83,7 @@ describe('account', () => {
         expect.stringContaining("13/01/2023 ||  || 100.00 || 400.00")
         ); 
     });
+ 
   });
 
   describe('credit', () => {
