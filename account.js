@@ -30,7 +30,7 @@ class Account {
     this.transactions.push(transaction);
 
   }
-  credit(date, amount) {
+  deposit(date, amount) {
     this.current_balance += amount;
     const new_transaction = new Transaction();
     new_transaction.credit_amount = amount;
@@ -38,12 +38,11 @@ class Account {
     return new_transaction;
   }
 
-  debit(date, amount) {
+  withdraw(date, amount) {
     this.current_balance -= amount;
     const new_transaction = new Transaction();
     new_transaction.debit_amount = amount;
     this.setPropertiesAndRecord(new_transaction, date, amount);
-    console.log(new_transaction)
     return new_transaction;
   }
 

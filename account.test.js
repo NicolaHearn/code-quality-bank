@@ -14,8 +14,8 @@ describe('account', () => {
     it('keeps a list of all transactions', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.credit("12/01/2023", 500);
-      tTwo = myAccount.debit("13/01/2023", 100);
+      tOne = myAccount.deposit("12/01/2023", 500);
+      tTwo = myAccount.withdraw("13/01/2023", 100);
 
       expect(myAccount.transactions).toEqual([
         {date: new Date("2023", "01" -1, "12"), credit_amount: 500, debit_amount: null, balance: 500},
@@ -28,9 +28,9 @@ describe('account', () => {
     it('prints a statement including a header and all transactions newest to oldest', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.credit("12/01/2023", 500);
-      tTwo = myAccount.debit("13/01/2023", 100);
-      tThree = myAccount.credit("14/01/2023", 500);
+      tOne = myAccount.deposit("12/01/2023", 500);
+      tTwo = myAccount.withdraw("13/01/2023", 100);
+      tThree = myAccount.deposit("14/01/2023", 500);
       
       const logSpy = jest.spyOn(global.console, 'log');
       myAccount.printStatement();
@@ -42,8 +42,8 @@ describe('account', () => {
     it('prints a statement header to the console', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.credit("12/01/2023", 500);
-      tTwo = myAccount.debit("13/01/2023", 100);
+      tOne = myAccount.deposit("12/01/2023", 500);
+      tTwo = myAccount.withdraw("13/01/2023", 100);
 
       const logSpy = jest.spyOn(global.console, 'log');
       myAccount.printStatement();
@@ -55,8 +55,8 @@ describe('account', () => {
     it('prints a transaction in the statement', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.credit("12/01/2023", 500);
-      tTwo = myAccount.debit("13/01/2023", 100);
+      tOne = myAccount.deposit("12/01/2023", 500);
+      tTwo = myAccount.withdraw("13/01/2023", 100);
       
 
       const logSpy = jest.spyOn(global.console, 'log');
@@ -70,8 +70,8 @@ describe('account', () => {
     it('prints all transactions in the statement', () => {
       const myAccount = new Account();
 
-      tOne = myAccount.credit("12/01/2023", 500);
-      tTwo = myAccount.debit("13/01/2023", 100);
+      tOne = myAccount.deposit("12/01/2023", 500);
+      tTwo = myAccount.withdraw("13/01/2023", 100);
       
       const logSpy = jest.spyOn(global.console, 'log');
       myAccount.printStatement();
@@ -86,20 +86,20 @@ describe('account', () => {
  
   });
 
-  describe('credit', () => {
+  describe('deposit', () => {
    xit('accepts two arguments - a date as a string and an amount as a number', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
 
-      expect(myAccount.credit(date)).not.toThrowError;
+      expect(myAccount.deposit(date)).not.toThrowError;
     });
 
     it('adds the amount to the current balance', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
-      myAccount.credit(date, amount);
+      myAccount.deposit(date, amount);
 
       expect(myAccount.current_balance).toEqual(100);
     });
@@ -108,7 +108,7 @@ describe('account', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
-      return_value = myAccount.credit(date, amount);
+      return_value = myAccount.deposit(date, amount);
 
       expect(return_value instanceof Transaction).toBe(true);
     });
@@ -118,7 +118,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.credit(date, amount);
+      new_transaction = myAccount.deposit(date, amount);
       
       expect(new_transaction.date).toEqual(new Date("2023", "01" -1, "21"))
     });
@@ -128,7 +128,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.credit(date, amount);
+      new_transaction = myAccount.deposit(date, amount);
 
       expect(new_transaction.credit_amount).toEqual(100);
       expect(new_transaction.debit_amount).toEqual(null);
@@ -139,26 +139,26 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.credit(date, amount);
+      new_transaction = myAccount.deposit(date, amount);
 
       expect(new_transaction.balance).toEqual(100);
     });
   });
 
-  describe('debit', () => {
+  describe('withdraw', () => {
     xit('accepts two arguments - a date as a string and an amount as a number', () => {
         myAccount = new Account();
         date = "21/01/2023";
         amount = 100;
 
-        expect(myAccount.debit(date)).not.toThrowError;
+        expect(myAccount.withdraw(date)).not.toThrowError;
       });
   
     it('adds the amount to the current balance', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
-      myAccount.debit(date, amount);
+      myAccount.withdraw(date, amount);
 
       expect(myAccount.current_balance).toEqual(-100);
     });
@@ -167,7 +167,7 @@ describe('account', () => {
       myAccount = new Account();
       date = "21/01/2023";
       amount = 100;
-      return_value = myAccount.debit(date, amount);
+      return_value = myAccount.withdraw(date, amount);
 
       expect(return_value instanceof Transaction).toBe(true);
     });
@@ -177,7 +177,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.debit(date, amount);
+      new_transaction = myAccount.withdraw(date, amount);
       
       expect(new_transaction.date).toEqual(new Date("2023", "01" -1, "21"))
     });
@@ -187,7 +187,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.debit(date, amount);
+      new_transaction = myAccount.withdraw(date, amount);
 
       expect(new_transaction.debit_amount).toEqual(100);
       expect(new_transaction.credit_amount).toEqual(null);
@@ -198,7 +198,7 @@ describe('account', () => {
       date = "21/01/2023";
       amount = 100;
 
-      new_transaction = myAccount.debit(date, amount);
+      new_transaction = myAccount.withdraw(date, amount);
 
       expect(new_transaction.balance).toEqual(-100);
     });
