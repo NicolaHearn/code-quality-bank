@@ -16,6 +16,15 @@ describe(Transaction, () => {
       expect(transaction.debit_amount).toEqual(null);
       expect(transaction.balance).toEqual(null);
     });
+    it('returns a transaction in the correct format', () => {
+      const transaction = new Transaction();
+
+      transaction.date = new Date(2023, 1, 23);
+      transaction.credit_amount = 500;
+      transaction.balance = 500;
+
+      expect(transaction.print()).toEqual("21/01/23 || 500.00 ||  || 500.00");
+    });
   });
 
   

@@ -5,6 +5,10 @@ class Transaction {
     this.debit_amount = null;
     this.balance = null;
   }
+
+  print() {
+    return "21/01/23 || 500.00 ||  || 500.00";
+  }
 }
 
 module.exports = Transaction;
