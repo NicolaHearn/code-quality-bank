@@ -25,7 +25,7 @@ describe('account', () => {
   });
 
   describe('print_statement', () => {
-    it('returns a header for the statement', () => {
+    it('prints a statement header to the console', () => {
       const myAccount = new Account();
 
       tOne = myAccount.credit("12/01/2023", 500);
@@ -38,7 +38,7 @@ describe('account', () => {
         expect.stringContaining("date || credit || debit || balance")
         );
     });
-    it('prints a statement to the console', () => {
+    it('prints a transaction in the statement', () => {
       const myAccount = new Account();
 
       tOne = myAccount.credit("12/01/2023", 500);
@@ -49,9 +49,26 @@ describe('account', () => {
       myAccount.printStatement();
       const header = "date || credit || debit || balance";
 
-      expect(logSpy).toHaveBeenCalled();
       expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining("12/01/2023 || 500.00 || || 500.00")
+        expect.stringContaining("12/01/2023 || 500.00 ||  || 500.00")
+        ); 
+    });
+
+    it('prints all transactions in the statement', () => {
+      const myAccount = new Account();
+
+      tOne = myAccount.credit("12/01/2023", 500);
+      tTwo = myAccount.debit("13/01/2023", 100);
+      
+      const logSpy = jest.spyOn(global.console, 'log');
+      myAccount.printStatement();
+      const header = "date || credit || debit || balance";
+
+      expect(logSpy).toHaveBeenCalledWith(
+        expect.stringContaining("12/01/2023 || 500.00 ||  || 500.00")
+        ); 
+      expect(logSpy).toHaveBeenCalledWith(
+        expect.stringContaining("13/01/2023 ||  || 100.00 || 400.00")
         ); 
     });
   });

@@ -22,8 +22,9 @@ describe(Transaction, () => {
       transaction.date = new Date(2023, 1 -1, 21);
       transaction.credit_amount = 500;
       transaction.balance = 500;
+    
 
-      expect(transaction.print()).toEqual("21/01/2023 || 500.00 || || 500.00");
+      expect(transaction.print()).toEqual("21/01/2023 || 500.00 ||  || 500.00");
     });
   });
 

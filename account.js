@@ -48,7 +48,11 @@ class Account {
 
   printStatement() {
     const header = "date || credit || debit || balance";
-    console.log(`${header}\n${this.transactions[0].print()}`);
+    // print_list = []
+    console.log(`${header}`);
+    // \n${this.transactions.forEach(transaction => console.log(transaction.print()))}`);
+
+    this.transactions.forEach(transaction => console.log(transaction.print()))
   }
 }
 
