@@ -24,33 +24,31 @@ class Account {
     return new Date(year, month-1, day);
   }
 
+  setPropertiesAndRecord(transaction, date, amount) {
+    transaction.date = this.stringToDate(date);
+    transaction.balance = this.current_balance;
+    this.transactions.push(transaction);
 
+  }
   credit(date, amount) {
     this.current_balance += amount;
     const new_transaction = new Transaction();
-
-    new_transaction.date = this.stringToDate(date);
     new_transaction.credit_amount = amount;
-    new_transaction.balance = this.current_balance;
-    this.transactions.push(new_transaction);
+    this.setPropertiesAndRecord(new_transaction, date, amount);
     return new_transaction;
   }
 
   debit(date, amount) {
     this.current_balance -= amount;
     const new_transaction = new Transaction();
-    new_transaction.date = this.stringToDate(date);
     new_transaction.debit_amount = amount;
-    new_transaction.balance = this.current_balance;
-    this.transactions.push(new_transaction);
+    this.setPropertiesAndRecord(new_transaction, date, amount);
     return new_transaction;
   }
 
   printStatement() {
     const header = "date || credit || debit || balance";
-    // print_list = []
     console.log(`${header}`);
-    // \n${this.transactions.forEach(transaction => console.log(transaction.print()))}`);
 
     this.transactions.forEach(transaction => console.log(transaction.print()))
   }
