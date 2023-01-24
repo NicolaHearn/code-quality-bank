@@ -23,7 +23,7 @@ describe(Transaction, () => {
       transaction.credit_amount = 500;
       transaction.balance = 500;
 
-      expect(transaction.print()).toEqual("21/01/2023 || 500.00 ||  || 500.00");
+      expect(transaction.print()).toEqual("21/01/2023 || 500.00 || || 500.00");
     });
   });
 

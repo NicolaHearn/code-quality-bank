@@ -26,9 +26,12 @@ describe('account', () => {
 
   describe('print_statement', () => {
     it('returns a header for the statement', () => {
-      const MyAccount = new Account();
+      const myAccount = new Account();
 
-      expect(MyAccount.printStatement()).toEqual(
+      tOne = myAccount.credit("12/01/2023", 500);
+      tTwo = myAccount.debit("13/01/2023", 100);
+
+      expect(myAccount.printStatement()).toEqual(
         expect.stringContaining("date || credit || debit || balance")
         );
     });
