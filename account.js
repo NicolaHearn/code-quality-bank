@@ -28,23 +28,28 @@ class Account {
     date instanceof Date ? transaction.date = date : transaction.date = this.stringToDate(date);
     transaction.balance = this.current_balance;
     this.transactions.push(transaction);
-
   }
-  deposit(amount, date = new Date()) {
-    // console.log(this.transactions)
+
+  dateIsValid(date) {
     date instanceof Date ? date = date : date = this.stringToDate(date);
-    if (this.transactions.length === 0 || (date >= this.transactions.at(-1).date)) {
+    if (this.transactions.length !== 0 && date < this.transactions.at(-1).date) {
+      console.log('The date must be later than the date of the most recent transaction')
+    }
+  }
+
+  deposit(amount, date = new Date()) {
+    date instanceof Date ? date = date : date = this.stringToDate(date);
+    this.dateIsValid(date);
     this.current_balance += amount;
     const new_transaction = new Transaction();
     new_transaction.credit_amount = amount;
     this.setPropertiesAndRecord(new_transaction, date);
     return new_transaction;
-    } else if (date < this.transactions.at(-1).date) {
-      console.log('The date must be later than the date of the most recent transaction');
-    }
   };
 
   withdraw(amount, date = new Date()) {
+    date instanceof Date ? date = date : date = this.stringToDate(date);
+    this.dateIsValid(date);
     this.current_balance -= amount;
     const new_transaction = new Transaction();
     new_transaction.debit_amount = amount;

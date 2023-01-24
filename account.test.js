@@ -219,7 +219,9 @@ describe('account', () => {
         myAccount.deposit(100, "10/01/2023")
 
         expect(logSpy).toHaveBeenCalledWith('The date must be later than the date of the most recent transaction'); 
-      })
+        myAccount.withdraw(200, "08/01/2023");
+        expect(logSpy).toHaveBeenCalledWith('The date must be later than the date of the most recent transaction');
+      });
     }) 
   });
 
