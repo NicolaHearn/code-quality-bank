@@ -67,33 +67,27 @@ class Account {
 
   balanceCumulative() {
     const transactionSort = this.transactions.sort((a,b) => a.date - b.date);
-    // for (const transaction of transactionSort) 
     transactionSort.forEach((transaction) => {
       if (transaction === transactionSort.at(0)) {
         transaction.balance = 0 + transaction.credit_amount - transaction.debit_amount
       } else {
         transaction.balance = transactionSort[transactionSort.indexOf(transaction)-1].balance + transaction.credit_amount - transaction.debit_amount
       }
-    
     });
-    console.log(transactionSort)
     return transactionSort
   }
-      // if (trans === transactionSort.at(0)) {
-      //   trans.balance = 0 + trans.credit_amount - trans.debit_amount
-      // } else {
-      //   trans.balance = (transactionSort[transactionSort.indexOf(trans)-1].balance) + trans.credit_amount - trans.debit_amount
-      // }
 
+  printStatement() {
+    const header = "date || credit || debit || balance";
 
-  // printStatement() {
-  //   const header = "date || credit || debit || balance";
+    const transactionsPrint = []
 
-  //   const transactions_pretty = [] // .map here would be better but it returned undefined and I couldn't work out why
-  //   this.transactions.reverse().forEach(transaction => transactions_pretty.push(transaction.print()));
+    this.balanceCumulative().reverse().map((transaction) => {transactionsPrint.push(
+      `${transaction.date.toLocaleDateString()} || ${transaction.credit_amount === null ? '' : transaction.credit_amount.toFixed(2)} || ${transaction.debit_amount === null ? '' : transaction.debit_amount.toFixed(2)} || ${transaction.balance.toFixed(2)}`
+    )});
 
-  //   console.log(`${header}\n${transactions_pretty.join("\n")}`);
-  // }
+    console.log(`${header}\n${transactionsPrint.join("\n")}`);
+  }
 }
 
 module.exports = Account;
