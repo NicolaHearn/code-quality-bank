@@ -52,6 +52,20 @@ describe('account', () => {
         //   {date: new Date("2023", "1"-1, "23"), credit_amount: 500, debit_amount: null, balance: null}
         //  ])
       });
+      it('calculates the balance after sorting the array by date', () => {
+        tOne = myAccount.deposit(500, "20/01/2023");
+        tTwo = myAccount.withdraw(100, "15/01/2023");
+        tThree = myAccount.deposit(500, "23/01/2023");
+        tFour = myAccount.deposit(200, "14/01/2023");
+
+        expect(myAccount.addBalance()).toEqual([
+          {date: new Date("2023", "1"-1, "14"), credit_amount: 200, debit_amount: null, balance: 200},
+          {date: new Date("2023", "1"-1, "15"), credit_amount: null, debit_amount: 100, balance: 100},
+          {date: new Date("2023", "1"-1, "20"), credit_amount: 500, debit_amount: null, balance: 600},
+          {date: new Date("2023", "1"-1, "23"), credit_amount: 500, debit_amount: null, balance: 1100}
+         ])
+
+      });
     });
 
     describe('print_statement', () => {

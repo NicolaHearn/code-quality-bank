@@ -75,7 +75,24 @@ class Account {
 
   addBalance() {
     const transactionSort = this.transactions.sort((a,b) => a.date - b.date);
-    return transactionSort
+    // return transactionSort
+
+    for (const trans of transactionSort) {
+      if (trans === transactionSort.at(0)) {
+        trans.balance = 0 + trans.credit_amount - trans.debit_amount
+      } else {
+        trans.balance = transactionSort[transactionSort.indexOf(trans)-1].balance + trans.credit_amount - trans.debit_amount
+      }
+    }
+      // if (trans === transactionSort.at(0)) {
+      //   trans.balance = 0 + trans.credit_amount - trans.debit_amount
+      // } else {
+      //   trans.balance = (transactionSort[transactionSort.indexOf(trans)-1].balance) + trans.credit_amount - trans.debit_amount
+      // }
+  
+
+    return transactionSort;
+
   }
 
   // printStatement() {
