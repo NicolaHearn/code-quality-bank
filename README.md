@@ -40,15 +40,11 @@ I also used a Design recipe (DesignRecipe.md) which proved very useful and has m
 - In the terminal open a repl by typing 'node'
 - then type
 
-```
-const Account = require('./account.js')
-```
+  const Account = require('./account.js')
 
 - then type to create a new account to work in.
 
-```
-const <AccountName> = new Account()
-```
+  const <AccountName> = new Account()
 
 - You can now use the following commands:
   - myAccount.deposit(200, "23/01/2023")
@@ -56,9 +52,3 @@ const <AccountName> = new Account()
   - myAccount.printStatement(200, "23/01/2023")
 
 [!Screenshot](screenshot.png)
-
-## Known issues:
-
-- An error message is output when you enter a date that is earlier than the most recent transaction but it still logs the transaction.
-- An error message is output when you enter a date that is not in the correct format but the programme still logs the transaction
-- The statement only works if the transactions are input in date order.
