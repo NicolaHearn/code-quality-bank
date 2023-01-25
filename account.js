@@ -1,8 +1,8 @@
-const Transaction = require('./transaction.js');
+const Transaction = require("./transaction.js");
 
 class Account {
   constructor() {
-    this.current_balance = 0
+    this.current_balance = 0;
     this.transactions = [];
   }
 
