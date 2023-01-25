@@ -1,15 +1,5 @@
 const Transaction = require("./transaction.js");
 
-// const replServer = repl.start({
-//   prompt: "node > ",
-//   input: process.stdin,
-//   output: process.stdout,
-//   useGlobal: true
-// });
-// replServer.on('exit', function() {
-//   console.log("REPL DONE");
-// });
-
 class Account {
   constructor() {
     this.current_balance = 0;
@@ -17,78 +7,86 @@ class Account {
   }
 
   stringToDate(dateString) {
-    const dateFormat =
-      /^(0?[1-9]|1[0-2])[/](0?[1-9]|[1-2][0-9]|3[01])[/]\d{4}$/;
+      const year = dateString.slice(6);
+      const month = dateString.slice(3, 5);
+      const day = dateString.slice(0, 2);
 
-    if (!dateString.match(dateFormat)) {
-      console.log("The date must be in format dd/mm/yyyy");
-    }
-
-    const year = dateString.slice(6);
-    const month = parseInt(dateString.slice(3, 5));
-    const day = dateString.slice(0, 2);
-
-    return new Date(year, month - 1, day);
+      return new Date(year, month-1, day);
   }
 
-  setPropertiesAndRecord(transaction, date) {
-    date instanceof Date
-      ? (transaction.date = date)
-      : (transaction.date = this.stringToDate(date));
-    transaction.balance = this.current_balance;
-    this.transactions.push(transaction);
-  }
-
-  dateIsValid(date) {
-    date instanceof Date ? date : (date = this.stringToDate(date));
-    if (
-      this.transactions.length !== 0 &&
-      date < this.transactions.at(-1).date
-    ) {
-      console.log(
-        "The date must be later than the date of the most recent transaction"
-      );
+  dateStringValid(date) {
+    const dateFormat = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/
+    if ((typeof date) == "string") {
+      if (date.match(dateFormat)) {
+     
+        return true
+        } else {
+       
+        return false
+        }
+    } else {
+      return false
     }
   }
 
-  // dateFormatIsValid(date) {
-  //   const dateFormat = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
+  dateIsDateObject(date) {
+    if (Object.prototype.toString.call(date) === "[object Date]") {
+      return true
+      } else {
+       return false
+      }
+  }
 
-  //   if (!date.match(dateFormat)) {
-  //     console.log('The date must be in format dd/mm/yyyy')
-  //   }
-  // }
+  createTransaction(amount, date) {
+    const new_transaction = new Transaction();
+    new_transaction.date = date;
+    amount > 0 ? new_transaction.credit_amount = amount : new_transaction.debit_amount = amount*-1;
+    new_transaction.balance = this.current_balance;
+    this.transactions.push(new_transaction);
+  }
 
   deposit(amount, date = new Date()) {
-    date instanceof Date ? date : (date = this.stringToDate(date));
-    this.dateIsValid(date);
-    this.current_balance += amount;
-    const new_transaction = new Transaction();
-    new_transaction.credit_amount = amount;
-    this.setPropertiesAndRecord(new_transaction, date);
-    return new_transaction;
-  }
+    if (this.dateIsDateObject(date) || this.dateStringValid(date)) {
+      this.dateIsDateObject(date) ? date : date = this.stringToDate(date);
+      this.current_balance += amount;
+      this.createTransaction(amount, date);
+    } else {
+      return false
+    }
+  };
 
   withdraw(amount, date = new Date()) {
-    // this.dateFormatIsValid(date);
-    date instanceof Date ? date : (date = this.stringToDate(date));
-    this.dateIsValid(date);
-    this.current_balance -= amount;
-    const new_transaction = new Transaction();
-    new_transaction.debit_amount = amount;
-    this.setPropertiesAndRecord(new_transaction, date);
-    return new_transaction;
+    if (this.dateIsDateObject(date) || this.dateStringValid(date)) {
+      this.dateIsDateObject(date) ? date : date = this.stringToDate(date);
+      this.current_balance -= amount;
+      this.createTransaction(amount*-1, date);
+    } else {
+      return false
+    }
+  }
+
+  balanceCumulative() {
+    const transactionSort = this.transactions.sort((a,b) => a.date - b.date);
+    transactionSort.forEach((transaction) => {
+      if (transaction === transactionSort.at(0)) {
+        transaction.balance = 0 + transaction.credit_amount - transaction.debit_amount
+      } else {
+        transaction.balance = transactionSort[transactionSort.indexOf(transaction)-1].balance + transaction.credit_amount - transaction.debit_amount
+      }
+    });
+    return transactionSort
   }
 
   printStatement() {
     const header = "date || credit || debit || balance";
 
-    const transactions_pretty = []; // .map here would be better but it returned undefined and I couldn't work out why
-    this.transactions
-      .reverse()
-      .forEach((transaction) => transactions_pretty.push(transaction.print()));
+    const transactionsPrint = []
 
-    console.log(`${header}\n${transactions_pretty.join("\n")}`);
+    this.balanceCumulative().reverse().map((transaction) => {transactionsPrint.push(
+      `${transaction.date.toLocaleDateString()} || ${transaction.credit_amount === null ? '' : transaction.credit_amount.toFixed(2)} || ${transaction.debit_amount === null ? '' : transaction.debit_amount.toFixed(2)} || ${transaction.balance.toFixed(2)}`
+    )});
+
+    console.log(`${header}\n${transactionsPrint.join("\n")}`);
   }
 }
 
