@@ -1,15 +1,5 @@
 const Transaction = require('./transaction.js');
 
-// const replServer = repl.start({
-//   prompt: "node > ",
-//   input: process.stdin,
-//   output: process.stdout,
-//   useGlobal: true
-// });
-// replServer.on('exit', function() {
-//   console.log("REPL DONE");
-// });
-
 class Account {
   constructor() {
     this.current_balance = 0
@@ -20,7 +10,7 @@ class Account {
       const year = dateString.slice(6);
       const month = dateString.slice(3, 5);
       const day = dateString.slice(0, 2);
-      
+
       return new Date(year, month-1, day);
   }
 
@@ -28,10 +18,10 @@ class Account {
     const dateFormat = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/
     if ((typeof date) == "string") {
       if (date.match(dateFormat)) {
-        console.log('it is true')
+     
         return true
         } else {
-        console.log('it is false')
+       
         return false
         }
     } else {
@@ -75,25 +65,26 @@ class Account {
     }
   }
 
-  addBalance() {
+  balanceCumulative() {
     const transactionSort = this.transactions.sort((a,b) => a.date - b.date);
-    for (const trans of transactionSort) {
-      if (trans === transactionSort.at(0)) {
-        trans.balance = 0 + trans.credit_amount - trans.debit_amount
+    // for (const transaction of transactionSort) 
+    transactionSort.forEach((transaction) => {
+      if (transaction === transactionSort.at(0)) {
+        transaction.balance = 0 + transaction.credit_amount - transaction.debit_amount
       } else {
-        trans.balance = transactionSort[transactionSort.indexOf(trans)-1].balance + trans.credit_amount - trans.debit_amount
+        transaction.balance = transactionSort[transactionSort.indexOf(transaction)-1].balance + transaction.credit_amount - transaction.debit_amount
       }
-    }
+    
+    });
+    console.log(transactionSort)
+    return transactionSort
+  }
       // if (trans === transactionSort.at(0)) {
       //   trans.balance = 0 + trans.credit_amount - trans.debit_amount
       // } else {
       //   trans.balance = (transactionSort[transactionSort.indexOf(trans)-1].balance) + trans.credit_amount - trans.debit_amount
       // }
-  
 
-    return transactionSort;
-
-  }
 
   // printStatement() {
   //   const header = "date || credit || debit || balance";
